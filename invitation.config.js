@@ -71,7 +71,8 @@ window.__INVITE__ = {
       "music": "einaudi_-divenire-1-1-.mp3",
       "shareImage": "share.jpg"
     },
-    "timezone": "Asia/Baghdad"
+    "timezone": "Asia/Baghdad",
+    "namesStacked": true
   },
   "locales": {
     "en": {

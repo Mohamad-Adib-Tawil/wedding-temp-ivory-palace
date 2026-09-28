@@ -238,3 +238,33 @@ body.ip-ar #ip-map .ip-map__title { font-family: 'IvoryRuqaa', serif; font-weigh
   font-family: 'Webgency', serif; font-weight: 600; font-size: 15px;
   background: #fffdf8 url('assets/paper-fffdf8.png'); }
 body.ip-ar #ip-map .ip-map__open { font-family: 'IvoryNaskh', serif; font-weight: 400; font-size: 16px; }
+
+/* Use invitation-configured couple names on desktop instead of the source preview image. */
+#rec2684632103 .tn-elem[data-elem-id="1785746425236"] { display: none !important; }
+@media (min-width: 480px) {
+  #rec2684632103 .tn-elem[data-elem-id="1785746843632"] {
+    display: table !important;
+    top: 120px !important;
+    left: calc(50% - 600px + 360px) !important;
+    width: 480px !important;
+    height: 300px !important;
+  }
+  #rec2684632103 .tn-elem[data-elem-id="1785746843632"] .ip-letters--hero { height: 280px; }
+}
+.ip-letters--hero .ip-letters__names--stacked {
+  font-size: 34px;
+  line-height: 1.15;
+  margin-top: 8px;
+}
+.ip-letters--hero .ip-letters__names--stacked .ip-letters__names-join {
+  font-size: 22px;
+  line-height: 1;
+}
+body.ip-ar .ip-letters--hero .ip-letters__names--stacked {
+  font-size: 38px;
+  line-height: 1.2;
+  margin-top: 10px;
+}
+body.ip-ar .ip-letters--hero .ip-letters__names--stacked .ip-letters__names-join {
+  font-size: 24px;
+}
