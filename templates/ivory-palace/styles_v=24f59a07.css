@@ -1,0 +1,240 @@
+/* Independent client template: keep the recorded layout and original artwork. */
+:root { color-scheme: only light; }
+html, body { background: #fdf4eb; }
+#allrecords { opacity: 1 !important; }
+#allrecords #weiOverlay, #allrecords #weiVideoWrap {
+  width: 100vw; height: 100vh; height: 100dvh;
+  overflow: hidden; background: #eceae4;
+}
+#allrecords #weiVideoWrap { opacity: 0; }
+#allrecords #weiVideoWrap.wei-video-in { opacity: 1; }
+#allrecords #weiVideoWrap.wei-video-out { opacity: 0; transition: opacity 450ms ease; }
+#allrecords #weiImg, #allrecords #weiVideo {
+  width: 100%; height: 100%; max-width: none; max-height: none;
+  aspect-ratio: auto; flex-shrink: 0; object-fit: cover; object-position: center;
+}
+#allrecords #weiTapWrap { bottom: max(32px, calc(10% + env(safe-area-inset-bottom, 0px))); pointer-events: none; }
+#allrecords #weiTapLabel { color: #8c744b; text-shadow: 0 1px 5px #fff; }
+#allrecords .wei-chevron { border-color: #a38b5f; }
+/* Keep intrinsic media dimensions out of Tilda's table layout, including Safari. */
+.ivory-hero-media {
+  position: relative; width: 100%; height: 0;
+  padding-bottom: 177.777778%; aspect-ratio: auto; box-sizing: content-box;
+  overflow: hidden;
+  background: url('assets/hero-palace-mobile-v1-poster.jpg') center / cover no-repeat;
+}
+#wlivVideo, #ivoryHeroPoster {
+  position: absolute; inset: 0; display: block;
+  width: 100%; height: 100%; max-width: none; max-height: none;
+  object-fit: cover; object-position: center;
+}
+#ivoryHeroPoster { z-index: 1; pointer-events: none; }
+#ivoryHeroPlay {
+  position: absolute; left: 50%; top: 76%; transform: translate(-50%, -50%);
+  z-index: 3; display: grid; place-items: center; width: 46px; height: 46px;
+  padding: 0; border: 1px solid #f8edcf; border-radius: 50%;
+  background: #a88d59; color: #fffdf7; cursor: pointer;
+}
+#ivoryHeroPlay svg { width: 22px; height: 22px; fill: currentColor; }
+#ivoryHeroPoster[hidden], #ivoryHeroPlay[hidden] { display: none; }
+#rec2684632103 .tn-elem:not([data-elem-type="html"]) { pointer-events: none; }
+#weiOverlay:focus-visible { outline: 2px solid #a88d59; outline-offset: -8px; }
+#weiAudioBtn:focus-visible, #ivoryHeroPlay:focus-visible { outline: 2px solid #a88d59; outline-offset: 4px; }
+.tdr-tile:focus-visible { outline: 2px solid #a88d59; outline-offset: 4px; }
+/* ===== الأقسام التي تحقنها المنصّة (تأكيد الحضور، التقويم، التوقيع) =====
+   القالب لا يحمّل خطوط Google، فنعطي هذه الأقسام خطوط القالب نفسها باسم صريح
+   بدل الاعتماد على Tajawal/Aref Ruqaa غير الموجودَين هنا. */
+@font-face { font-family: 'IvoryTitle'; src: url('assets/amiri-bold.woff') format('woff'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'IvoryBody'; src: url('assets/reemkufi-regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+#da3wa-rsvp, #da3wa-cal, #da3wa-mem, #da3wa-credit, #da3wa-album {
+  font-family: 'IvoryNaskh', 'Rufina', system-ui, sans-serif;
+}
+main > *:not(#allrecords) { background: #fdf4eb; }
+
+/* ===== شاشة اختيار اللغة وزر تبديلها ===== */
+#ipLangGate { position: fixed; inset: 0; z-index: 100000; display: grid; place-items: center;
+  background: #f6f1e7; transition: opacity .45s ease; }
+#ipLangGate[hidden] { display: none; }
+#ipLangGate.is-gone { opacity: 0; pointer-events: none; }
+.ip-gate__card { text-align: center; padding: 30px 26px; }
+.ip-gate__kicker { margin: 0 0 6px; color: #806b43; font-family: 'Webgency', serif; font-weight: 600; font-size: 14px; letter-spacing: .4px; }
+.ip-gate__kicker--ar { font-family: 'NewFonts', serif; font-weight: 200; font-size: 19px; }
+.ip-gate__choices { display: flex; flex-direction: column; gap: 12px; align-items: center; margin-top: 22px; }
+.ip-gate__btn { min-width: 200px; padding: 13px 26px; border: 1px solid rgba(166,133,71,.55); border-radius: 999px;
+  background: #fffdf8; color: #806b43; font-size: 17px; cursor: pointer; }
+.ip-gate__btn[lang="ar"] { font-family: 'NewFonts', serif; font-weight: 200; }
+.ip-gate__btn[lang="en"] { font-family: 'Webgency', serif; font-weight: 600; }
+.ip-gate__btn:focus-visible { outline: 2px solid #a88d59; outline-offset: 3px; }
+#ipLangSwitch { position: fixed; left: 14px;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 60;
+  padding: 8px 16px; border: 1px solid rgba(166,133,71,.45); border-radius: 999px;
+  background: rgba(255,253,248,.94); color: #806b43; font-size: 13px; cursor: pointer; }
+#ipLangSwitch[hidden] { display: none; }
+#ipLangSwitch:focus-visible { outline: 2px solid #a88d59; outline-offset: 3px; }
+
+/* ===== النصوص التي حلّت محل صورتي الحروف =====
+   الصورتان كانتا تعطيان عنصريهما ارتفاعاً، فنعيده صراحةً بقياس التصميم.
+   الخطوط هي خطوط القالب نفسها: Tilda يجمعها في عائلتين ويفرّقها بالوزن —
+   NewFonts 300 خط الأسماء، 700 المتن، 200 أميري، 800 الثلث؛ Webgency 600 Rufina. */
+/* Tilda يضبط ارتفاع هذه العناصر بنمط مضمّن وقت التشغيل، فيتقدّم على ملف النمط.
+   لذلك نضع القياس على النص نفسه لا على العنصر الحاوي. القياسان مأخوذان من
+   الصورتين الأصليتين كما ترسمهما النسخة المعتمدة: 214px للواجهة و164px للمكان. */
+.ip-letters {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 100%; gap: 3px; text-align: center; line-height: 1.24;
+  color: #806b43;
+}
+.ip-letters--hero { height: 214px; }
+.ip-letters--venue { height: 164px; }
+.ip-letters span { display: block; max-width: 100%; }
+.ip-letters span:empty { display: none; }
+.ip-letters--hero .ip-letters__kicker { font-family: 'Webgency', serif; font-weight: 600; font-size: 17px; letter-spacing: .4px; }
+.ip-letters--hero .ip-letters__occasion { font-family: 'NewFonts', serif; font-weight: 300; font-size: 36px; color: #a68547; }
+.ip-letters--hero .ip-letters__join { font-family: 'Webgency', serif; font-weight: 600; font-size: 15px; letter-spacing: .4px; }
+.ip-letters--hero .ip-letters__names { font-family: 'NewFonts', serif; font-weight: 300; font-size: 58px; color: #a68547; }
+.ip-letters--venue .ip-letters__city { font-family: 'Webgency', serif; font-weight: 600; font-size: 19px; letter-spacing: 3px; text-transform: uppercase; color: #a68547; }
+.ip-letters--venue .ip-letters__venue { font-family: 'NewFonts', serif; font-weight: 700; font-size: 20px; }
+.ip-letters--venue .ip-letters__addr { font-family: 'NewFonts', serif; font-weight: 700; font-size: 18px; opacity: .85; }
+
+/* ===== العربية =====
+   خطّا المنصّة نفسهما: الرُّقعة للأسماء والعناوين، وأميري العادي للمتن.
+   أميري «الغامق» الذي كان في القالب ثقيل ومزدحم، والرقعة أليق بدعوة كهذه.
+
+   !important ضروري هنا: قواعد Tilda تأتي بمحدّد (معرّف + صنفين) فتتقدّم على
+   أي محدّد معقول نكتبه، فتبقى خطوطها هي المطبَّقة بصمت. */
+@font-face { font-family: 'IvoryRuqaa'; src: url('assets/arefruqaa-700.ttf') format('truetype'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'IvoryNaskh'; src: url('assets/amiri-400.ttf') format('truetype'); font-weight: 400; font-display: swap; }
+
+body.ip-ar [id^="ip-"] { direction: rtl; unicode-bidi: plaintext; letter-spacing: normal; }
+
+/* الأسماء والعناوين — خط الرقعة */
+body.ip-ar #ip-groom, body.ip-ar #ip-bride,
+body.ip-ar .ip-letters__names, body.ip-ar .ip-letters__occasion,
+body.ip-ar #ip-date-title, body.ip-ar #ip-timeline-title,
+body.ip-ar #ip-countdown-title, body.ip-ar #ip-dear-family,
+body.ip-ar #ip-with, body.ip-ar .ip-letters__city {
+  font-family: 'IvoryRuqaa', serif !important; font-weight: 400 !important;
+}
+
+/* المتن والتفاصيل — أميري العادي */
+body.ip-ar #ip-invitation-text, body.ip-ar #ip-verse, body.ip-ar #ip-verse-source,
+body.ip-ar #ip-groom-parents, body.ip-ar #ip-bride-parents,
+body.ip-ar #ip-invite-kicker, body.ip-ar #ip-son-of, body.ip-ar #ip-daughter-of,
+body.ip-ar #ip-scratch-hint, body.ip-ar #ip-scroll-down,
+body.ip-ar [id^="ip-prog-"], body.ip-ar .ip-letters__kicker,
+body.ip-ar .ip-letters__join, body.ip-ar .ip-letters__venue,
+body.ip-ar .ip-letters__addr,
+body.ip-ar .wcb-label, body.ip-ar .tdr-label {
+  font-family: 'IvoryNaskh', serif !important; font-weight: 400 !important;
+  letter-spacing: normal !important;
+}
+
+/* أوقات البرنامج: «6:00 pm» سطر واحد بالإنكليزية، أما «٤:٠٠ عصراً» فأطول
+   فكان يلتف على ثلاثة أسطر ويطبق على عنوان الفقرة تحته. نمنع الالتفاف
+   ونثبّت ارتفاع الخانة كما في التصميم، ويتكفّل التصغير التلقائي بالباقي. */
+body.ip-ar [id^="ip-prog-"][id$="-time"] {
+  white-space: nowrap !important; font-size: 27px !important;
+  height: 54px; display: flex; align-items: center; justify-content: center;
+}
+body.ip-ar .ip-letters { direction: rtl; }
+/* النصوص المربوطة تبقى داخل صندوقها مهما طال اسم الزبون */
+[id^="ip-"] { overflow-wrap: break-word; }
+
+@media (max-width: 439px) {
+  #allrecords > .r[data-record-type="396"] { zoom: var(--ivory-page-scale, 1); }
+  #allrecords .t396__artboard > .tn-elem,
+  #allrecords .t396__artboard > .tn-group { translate: var(--ivory-page-offset, 0px) 0; }
+}
+@media (min-width: 768px) {
+  #allrecords #weiImg, #allrecords #weiVideo { width: auto; max-width: 100%; object-fit: contain; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #weiOverlay, #weiVideoWrap, #weiTapWrap, #weiTapLabel, .wei-chevron,
+  .wcb-number, .wcb-label { animation: none !important; transition: none !important; }
+  .wcb-number { clip-path: none !important; opacity: 1 !important; transform: none !important; }
+  #tdr-confetti, #tdr-flash { display: none !important; }
+}
+
+/* ===== مقاومة الوضع الداكن الإجباري =====
+   Samsung Internet وChrome «تعتيم المواقع» يقلبان ألوان الخلفيات المسطّحة إلى بنّي داكن
+   ويتجاهلان color-scheme، لكنهما لا يلمسان الصور النقطية. فنرسم العاجي صورةً فوق اللون نفسه:
+   في الوضع العادي لا فرق، وفي الداكن تبقى الدعوة عاجية كما صُمّمت. */
+html, body, main > *:not(#allrecords),
+#allrecords .t-rec[data-bg-color="#fdf4eb"], #allrecords .t396__artboard {
+  background-image: url('assets/paper-fdf4eb.png'); background-repeat: repeat;
+}
+#ipLangGate { background-image: url('assets/paper-f6f1e7.png'); }
+.ip-gate__btn, #ipLangSwitch { background-image: url('assets/paper-fffdf8.png'); }
+/* المتصفح يعتّم الصور الصغيرة (أقل من ~80px) كأنها أيقونات، فرقعة داخل القوس الصغيرة
+   تُرسم بصورة كبيرة مقصوصة على حدودها. */
+/* رقعة داخل القوس ومعيّنات خط البرنامج. */
+#rec2684632703 .tn-elem[data-elem-id="1784908280305000002"] .tn-atom,
+#rec2684632703 .tn-elem[data-elem-id="1784908365358000005"] .tn-atom,
+#rec2684632703 .tn-elem[data-elem-id="1784908373003000008"] .tn-atom,
+#rec2684632703 .tn-elem[data-elem-id="1784908382653000011"] .tn-atom,
+#rec2684632703 .tn-elem[data-elem-id="1784908389693000014"] .tn-atom,
+#rec2684632703 .tn-elem[data-elem-id="1785013957408000001"] .tn-atom,
+#rec2684632703 .tn-elem[data-elem-id="1784908280305000003"] .tn-atom,
+#rec2684632703 .tn-elem[data-elem-id="1784908365358000006"] .tn-atom,
+#rec2684632703 .tn-elem[data-elem-id="1784908373003000009"] .tn-atom,
+#rec2684632703 .tn-elem[data-elem-id="1784908382654000012"] .tn-atom,
+#rec2684632703 .tn-elem[data-elem-id="1784908389693000015"] .tn-atom { position: relative; overflow: hidden; }
+#rec2684632703 .tn-elem[data-elem-id="1784908280305000002"] .tn-atom::before,
+#rec2684632703 .tn-elem[data-elem-id="1784908365358000005"] .tn-atom::before,
+#rec2684632703 .tn-elem[data-elem-id="1784908373003000008"] .tn-atom::before,
+#rec2684632703 .tn-elem[data-elem-id="1784908382653000011"] .tn-atom::before,
+#rec2684632703 .tn-elem[data-elem-id="1784908389693000014"] .tn-atom::before,
+#rec2684632703 .tn-elem[data-elem-id="1785013957408000001"] .tn-atom::before,
+#rec2684632703 .tn-elem[data-elem-id="1784908280305000003"] .tn-atom::before,
+#rec2684632703 .tn-elem[data-elem-id="1784908365358000006"] .tn-atom::before,
+#rec2684632703 .tn-elem[data-elem-id="1784908373003000009"] .tn-atom::before,
+#rec2684632703 .tn-elem[data-elem-id="1784908382654000012"] .tn-atom::before,
+#rec2684632703 .tn-elem[data-elem-id="1784908389693000015"] .tn-atom::before {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 240px; height: 240px;
+  margin: -120px 0 0 -120px; background: url('assets/paper-fdf4eb.png');
+}
+#rec2684632703 .tn-elem[data-elem-id="1784908280305000002"] .tn-atom::before,
+#rec2684632703 .tn-elem[data-elem-id="1784908365358000005"] .tn-atom::before,
+#rec2684632703 .tn-elem[data-elem-id="1784908373003000008"] .tn-atom::before,
+#rec2684632703 .tn-elem[data-elem-id="1784908382653000011"] .tn-atom::before,
+#rec2684632703 .tn-elem[data-elem-id="1784908389693000014"] .tn-atom::before { background-image: url('assets/paper-d8ae68.png'); }
+/* الوردة في منتصف الخط صورة صغيرة: تُرسم بثلاثة أضعاف مقاسها ثم تُصغَّر فتنجو من التعتيم. */
+#rec2684632703 .tn-elem[data-elem-id="1785076717059000001"] .tn-atom { direction: ltr; }
+#rec2684632703 .tn-elem[data-elem-id="1785076717059000001"] .tn-atom__img {
+  width: 300%; max-width: none; transform: scale(calc(1 / 3)); transform-origin: 0 0; margin-bottom: -200%;
+}
+/* تلاشي أعلى القسم: التدرّج اللوني يُقلب، فنرسم العاجي صورةً ونصنع التلاشي بقناع. */
+[data-elem-id="1783416192571000001"] .tn-atom {
+  background: url('assets/paper-fdf4eb.png') !important;
+  -webkit-mask-image: linear-gradient(0turn, transparent, #000); mask-image: linear-gradient(0turn, transparent, #000);
+}
+
+/* الاسمان مكدّسان (محمد / و / رنا): خط الرقعة طويل الصعود والنزول، فيحتاج تباعداً
+   أوسع كي لا يلتصق سطر المناسبة بالاسم الأول. */
+.ip-letters--hero .ip-letters__names--stacked { line-height: 1.3; font-size: 50px; margin-top: 6px; }
+.ip-letters--hero .ip-letters__names--stacked > span { display: block; }
+.ip-letters--hero .ip-letters__names--stacked .ip-letters__names-join { font-size: 32px; line-height: 1; }
+body.ip-ar .ip-letters--hero .ip-letters__names--stacked { font-size: 54px; line-height: 1.25; margin-top: 20px; }
+body.ip-ar .ip-letters--hero .ip-letters__occasion { font-size: 30px; }
+body:not(.ip-ar) .ip-letters--hero .ip-letters__occasion { font-size: 30px; }
+
+/* اسما الوالدين في منتصف السطر تحت «والد العريس/العروس»؛ الموضع يضبطه script.js */
+body.ip-ar #ip-groom-parents, body.ip-ar #ip-bride-parents,
+body.ip-ar #ip-son-of, body.ip-ar #ip-daughter-of { text-align: center !important; }
+
+/* ===== خريطة القاعة ===== */
+#ip-map { padding: 26px 22px 40px; text-align: center; color: #806b43; }
+#ip-map[hidden] { display: none; }
+#ip-map .ip-map__title { margin: 0; font-family: 'NewFonts', serif; font-weight: 300; font-size: 40px; line-height: 1.2; color: #a68547; }
+body.ip-ar #ip-map .ip-map__title { font-family: 'IvoryRuqaa', serif; font-weight: 400; font-size: 34px; }
+#ip-map .ip-map__rule { display: block; width: 150px; height: 1px; margin: 10px auto 20px;
+  background: linear-gradient(90deg, transparent, #c9ad74, transparent); }
+#ip-map .ip-map__frame { max-width: 420px; margin: 0 auto; aspect-ratio: 4 / 3; overflow: hidden;
+  border: 1px solid rgba(166,133,71,.5); border-radius: 14px; padding: 5px;
+  background: #fffdf8 url('assets/paper-fffdf8.png'); box-shadow: 0 10px 24px rgba(128,107,67,.14); }
+#ip-map iframe { display: block; width: 100%; height: 100%; border: 0; border-radius: 10px; }
+#ip-map .ip-map__open { display: inline-block; margin-top: 18px; padding: 11px 24px;
+  border: 1px solid rgba(166,133,71,.55); border-radius: 999px; color: #806b43; text-decoration: none;
+  font-family: 'Webgency', serif; font-weight: 600; font-size: 15px;
+  background: #fffdf8 url('assets/paper-fffdf8.png'); }
+body.ip-ar #ip-map .ip-map__open { font-family: 'IvoryNaskh', serif; font-weight: 400; font-size: 16px; }
